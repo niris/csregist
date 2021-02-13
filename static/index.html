@@ -1,0 +1,229 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf8">
+<link rel="stylesheet" href="https://unpkg.com/chota@0.8.0/dist/chota.min.css">
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap">
+
+<style>
+	@font-face {
+		font-family: picon;
+		src: url(https://yne.fr/picon/Picon-Regular.woff2);
+	}
+
+	:root {
+		--color-primary: #01579b;
+		--color-success: #14854F;
+		--color-info: #01579b;
+		--font-family-sans: 'Kanit', sans-serif;
+	}
+
+	input:invalid {
+		color: var(--color-error) !important;
+	}
+
+	form:invalid input[type=submit] {
+		background-color: var(--color-lightGrey);
+	}
+
+	fieldset>legend {
+		font-weight: bold;
+	}
+
+	fieldset {
+		margin: 1em 0;
+		padding: 1em;
+	}
+
+	body {
+		margin: 0 auto;
+		max-width: 720px;
+		padding: 1em;
+	}
+
+	input:read-only {
+		border: none !important;
+	}
+
+	.info {
+		color: var(--color-info) !important;
+		margin: 0 1em;
+	}
+
+	i {
+		font-family: picon;
+		font-style: normal;
+	}
+
+	li i {
+		margin-right: 2rem;
+	}
+
+	ul.icon {
+		list-style: none;
+	}
+
+	.header {
+		margin: 2rem 2rem;
+	}
+
+	.picon {
+		font-family: picon;
+		white-space: nowrap;
+		width: 1rem;
+	}
+
+	.button.clear {
+		color: black;
+	}
+
+	:focus {
+		outline : none;
+	}
+
+</style>
+<script type=module defer>
+import Vue from "https://unpkg.com/vue@2.6.12/dist/vue.esm.browser.min.js";
+import VueRouter from "https://unpkg.com/vue-router@3.4.8/dist/vue-router.esm.browser.min.js";
+import Register from "/register.js";
+
+Vue.use(VueRouter)
+
+
+const Home = {template: `
+
+	<div id="home" class=text-center>
+		<img src="./cs_admission.jpg" style="margin:2em 0; max-width:100%">
+		<p style="line-height:3em">
+			<router-link to="/sign/up" tag="button" v-if="!$root.user">สมัครเรียน</router-link>
+			&nbsp;&nbsp;&nbsp;
+			<router-link to="/sign/in" tag="button" v-if="!$root.user">ตรวจสอบสถานะการสมัคร</router-link>
+		</p>
+		<br style="line-height:30vh">
+		<hr>
+		<p style="font-size:small">
+			<router-link to="/contact">ติดต่อผู้ดูแลระบบ</router-link>
+		</p>
+	</div>
+`};
+
+const MyContact = {template: `
+<div>
+	<h3 id="contact" class="header">ติดต่อผู้ดูแลระบบ</h3>
+	<ul class="icon">
+		<li><i>logo-facebook</i><a href="https://www.facebook.com/comsci.reru">comsci.reru</a></li>
+		<li><i>call</i><a href="tel:+66618034232">0618034232</a></li>
+		<li><i>mail-outline</i><a href="mailto:csreru@gmail.com">csreru@gmail.com</a></li>
+	</ul>
+</div>
+`};
+
+const Manual = {components: {MyContact}, template: `
+<div id="manual">
+	<h3 class="header">ขั้นตอนการสมัคร</h3>
+	<ul>
+		<li>กดปุ่ม <router-link :to="!$root.user ? '/sign/up' : ''">สมัครสอบ</router-link></li>
+		<li>กรอกข้อมูลการสมัครสอบ</li>
+		<li>กดปุ่ม บันทึกข้อมูล</li>
+		<li>หากต้องการแก้ไขข้อมูล ให้ กดปุ่ม  <router-link :to="!$root.user ? '/sign/in' : '/update'">ดูข้อมูลการสมัคร</router-link> ที่หน้าแรก</li>
+			<ul>
+				<li>หากยังไม่ลงชื่อเข้าใช้ ให้เข้าสู่ระบบโดยใช้เลขบัตรประจำตัวประชาชนและหมายเลขโทรศัพท์ที่ใช้ในการลงทะเบียน</li>
+				<li>แก้ไขข้อมูลและบันทึกข้อมูล</>
+			</ul>
+		<li>สาขาวิชาจะประกาศรายชื่อผู้มีสิทธิ์เข้าสอบสัมภาษณ์ผ่านเว็บไซต์/Facebook Fanpage/E-mail</li>
+		<li>เข้าสอบสัมภาษณ์</li>
+		<li>สาขาวิชาจะประกาศผลการเข้าศึกษาต่อผ่านเว็บไซต์/Facebook Fanpage/E-mail</li>
+		<li>หากตัดสินใจเข้าศึกษาต่อ ให้ทำการยืนยันสิทธิ์ผ่านระบบ </li>
+		<li>เข้าสู่ขั้นตอนการลงทะเบียนและชำระค่าบำรุงการศึกษาผ่านมหาวิทยาลัย</li>
+	</ul>
+	<img src="/process.svg">
+	<my-contact></my-contact>
+</div>
+`
+};
+
+
+const SignIn = {template: `
+	<div id="signin">
+	<h3 class=text-center>ตรวจสอบสถานะการสมัคร</h3>
+	<form name=forminfo method=post action="/authen" @submit.prevent="signin(event.target)" v-if="!$root.user">
+		<label><span>หมายเลขบัตรประจำตัวประชาชน</span><input name=identity autocomplete="username"></label>
+		<label><span>รหัสผ่าน</span><input name=tel type=password placeholder="หมายเลขโทรศัพท์" autocomplete="current-password"></label>
+		<br> 
+		<div class="is-right row">
+			<p id="signmessage" class="col-8 text-right is-hidden">{{this.$root.message}}</p>
+			<input name="signin" class="col-3 button" type=submit value=ลงชื่อเข้าใช้>
+		</div>
+	</form>
+	</div>`,
+	methods:{
+		signin({action, method, identity, tel}){
+			fetch(action, {method, body:JSON.stringify({identity:identity.value,tel:tel.value}), headers: {
+            "Content-Type": "application/json"
+		  }}).then(x=>{if(x.ok){
+			this.$root.reloadcookie();this.$router.push('/update');
+		  }else{
+			this.$root.addRemoveElement("signin","error","signmessage","ชื่อผู้ใช้/รหัสผ่านไม่ถูกต้อง", "text-error","is-hidden");
+		  }
+		})
+		}
+	}}
+new Vue({
+	el:'main',
+	router: new VueRouter({mode:'history',linkExactActiveClass:'active',routes:[
+		{path:'/', component:Home},
+		{path:'/sign/up', component:Register, props:{create:true}},
+		{path:'/sign/in', component:SignIn},
+		{path:'/sign/out', component:Home},
+		{path:'/update', component:Register, props:{update:true}},
+		{path:'/manual', component:Manual},
+		{path:'/contact', component:MyContact},
+	]}),
+	data() {
+		return {
+			cookie: document.cookie,
+			message:"",
+		}
+	},
+	computed: {
+		user() {
+			const cookies = this.cookie.split('; ').map(c => c.split("=")).reduce((e,[k,...v])=>({...e,[k]:v.join('=')}),{})
+			return JSON.parse(atob(cookies.tok||'')||'null')
+		}
+	},
+	methods: {
+		reloadcookie(){this.cookie=document.cookie},
+		signout({action, method}){
+			fetch(action, {method}).then(x=>{this.reloadcookie();this.$router.push('/')})
+		},
+		addRemoveElement(prop, button_class,id,message, added_message, removed_message) {
+			const forminfo = document.forms.forminfo;
+			const info = document.getElementById(id);
+			forminfo[prop].classList.add(button_class);
+			this.message = message;
+			info.classList.add(added_message);
+			info.classList.remove(removed_message);
+			window.setTimeout(function () {
+				forminfo[prop].classList.remove(button_class);
+				info.classList.remove(added_message);
+				info.classList.add(removed_message);
+			}, 3000);
+
+		}
+	}
+})
+</script>
+<main>
+	<nav class="tabs is-full">
+		<a href="https://www.facebook.com/comsci.reru"><img src="/favicon.svg" width="32" style="min-width:24px"></a>
+		<router-link to="/">หน้าแรก</router-link>
+		<router-link to="/manual">คู่มือการสมัคร</router-link>
+		<router-link to="/update" v-if="user">ข้อมูลการสมัคร</router-link>
+		<form method=post action="/logout" id="signout" @submit.prevent="signout(event.target)"></form>
+		<button class="button clear icon" form=signout v-if="user">
+			<div class="picon" title="ออกจากระบบ">log-out</div>
+		</button>
+	</nav>
+
+	<router-view :key="$route.path"></router-view>
+
+</main>
