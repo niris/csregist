@@ -1,0 +1,27 @@
+{
+  "name": "csregist",
+  "version": "1.0.0",
+  "description": "csreru admission",
+  "main": "api.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node api.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niris/csregist.git"
+  },
+  "author": "sirinyao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/niris/csregist/issues"
+  },
+  "homepage": "https://github.com/niris/csregist#readme"
+}
