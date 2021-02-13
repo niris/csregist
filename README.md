@@ -1,8 +1,10 @@
-# Registration website for RERU CS
+# A Simple registration website for CS RERU (Deployed on Heroku)
+
+* FrontEnd : Vue.js + Chota
+* BackEnd : Express.js + MongoDB (MongoDB Atlas)
 
 ## Start
 
 ```
-cd cs-register
-python3 .
+node api.js
 ```
