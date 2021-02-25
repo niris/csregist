@@ -97,7 +97,7 @@ app.listen(port, () => {
 });
 
 setInterval(function () {
-  if (!db) mongodb.MongoClient.connect(uri, { useNewUrlParser: true })
+  if (!db) mongodb.MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true})
     .then(c => db = c.db("admission"))
     .catch(e => { db = null; console.log(e); });
 }, 5000);

@@ -2,9 +2,7 @@ export default {
 	props: ["create", "update"],
 	data() {
 		return {
-			user: {},
-			status: "รอการสอบสัมภาษณ์",
-			interviewdate: "27 กุมภาพันธ์ 2564",
+			user: {status:"รอการสอบสัมภาษณ์", interviewdate:"27 มีนาคม 2564"},
 		}
 	},
 	mounted() {
@@ -58,17 +56,17 @@ export default {
   <form name="forminfo" method=post :action="create ? '/user/' : ('/user/' + user.identity)" @submit.prevent="createuser(event.target)">
 	<table>
 		<tr>
-			<td><img width=150 src="/logo.png"></td>
+			<td><img alt="logo" width=150 src="/logo.png"></td>
 			<td><h2 class=text-center>แบบฟอร์มการรับสมัคร</h2>
 			<p class=text-center>สาขาวิชาวิทยาการคอมพิวเตอร์ มหาวิทยาลัยราชภัฏร้อยเอ็ด</p>
 			<p class=text-center>ปีการศึกษา 2564</h3></p>
 		</tr>
 	</table>
-	<fieldset v-if="$root.user" >
-		<legend>สถานะการสมัคร</legend>
-		<label><span>สถานะ</span><p class="info">{{ status }}</p></label>
-		<label><span>วันสอบสัมภาษณ์</span><p class="info">{{ interviewdate}}</p></label>
 
+	<fieldset :hidden="$root.user ? null : true">
+		<legend>สถานะการสมัคร</legend>
+		<label><span>สถานะ</span><input name="status" v-model="user.status" :readonly="update" class=info></label>
+		<label><span>วันสอบสัมภาษณ์</span><input name="interviewdate" v-model="user.interviewdate" :readonly="update" class="info"></label>
 	</fieldset>
 	<fieldset v-bind:disabled="!(update||create)">
 		<legend>ข้อมูลส่วนตัว</legend>
@@ -90,10 +88,11 @@ export default {
 	<fieldset v-bind:disabled="!(update||create)">
 		<legend>ข้อมูลติดต่อ</legend>
 		<label><span>หมายเลขโทรศัพท์</span><input name="tel" type="tel" autocomplete="tel" v-model="user.tel" pattern="^0[0-9]{9}" oninvalid="this.setCustomValidity('โปรดกรอกเลขโทรศัพท์ที่ถูกต้อง 10 หลัก')"  oninput="setCustomValidity('')" required></label>
-		<label><span>E-mail</span><input name="mail" type="email" autocomplete="email" type="email" v-model="user.mail" required></label>
-		<label><span>Line ID</span><input name="line" v-model="user.line" ></label>
-		<label><span>Facebook ID</span><input name="facebook" v-model="user.facebook" ></label>
+		<label><span>E-mail</span><input name="mail" type="email" autocomplete="email" v-model="user.mail" required></label>
+		<label><span>Line ID (ถ้ามี)</span><input name="line" v-model="user.line" ></label>
+		<label><span>Facebook ID (ถ้ามี)</span><input name="facebook" v-model="user.facebook" ></label>
 	</fieldset>
+
 	<div class="is-right row">
 		<p id="usermessage" class="col-8 text-right is-hidden">{{this.$root.message}}</p>
 		<input name="create" type=submit value=บันทึกข้อมูล v-if="create" class="col-3 button">

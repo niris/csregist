@@ -1,19 +1,27 @@
 <!DOCTYPE html>
+<html lang="th">
 <meta charset="utf8">
+<title>Admission | CS RERU</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta property="og:image" content='/cs_admission.jpg'>
+<meta property="og:image" content='/cs_admission.webp'>
 <meta property="og:url" content="https://admission-csreru.herokuapp.com" />
-<meta property="og:title" content="ADMISSION | CS RERU" />
 <meta property="og:description" content="ระบบรับสมัครนักศึกษา สาขาวิชาวิทยาการคอมพิวเตอร์ มหาวิทยาลัยราชภัฏร้อยเอ็ด"/>
 
-<link rel="stylesheet" href="https://unpkg.com/chota@0.8.0/dist/chota.min.css">
+<link rel="stylesheet" href="/chota.min.css">
 <link rel="icon" href="/favicon.svg">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap">
 
 <style>
 	@font-face {
 		font-family: picon;
-		src: url(https://yne.fr/picon/Picon-Regular.woff2);
+		src: url(/Picon-Regular.woff2);
+		font-display: swap;
+
+	}
+
+	@font-face {
+		font-family: Kanit;
+		src: url(/kanit.woff2);
+		font-display: swap;
 	}
 
 	:root {
@@ -98,7 +106,7 @@ Vue.use(VueRouter)
 const Home = {template: `
 
 	<div id="home" class=text-center>
-		<img src="./cs_admission.jpg" style="margin:2em 0; max-width:100%">
+		<img src="./cs_admission.webp" alt="banner" style="margin:2em 0; max-width:100%">
 		<p style="line-height:3em">
 			<router-link to="/sign/up" tag="button" v-if="!$root.user">สมัครเรียน</router-link>
 			&nbsp;&nbsp;&nbsp;
@@ -125,6 +133,11 @@ const MyContact = {template: `
 
 const Manual = {components: {MyContact}, template: `
 <div id="manual">
+	<h3 class="header">ปฏิทินการรับสมัคร (รอบที่ 2)</h3>
+	<ul>
+		<li>ระยะเวลาการรับสมัคร : 26 กุมภาพันธ์ 2564 - 25 มีนาคม 2564</li>
+		<li>สอบสัมภาษณ์ : วันเสาร์ที่ 27 มีนาคม 2564 (สัมภาษณ์ออนไลน์ หรือ สัมภาษณ์ที่มหาวิทยาลัย)</li>
+	</ul>
 	<h3 class="header">ขั้นตอนการสมัคร</h3>
 	<ul>
 		<li>กดปุ่ม <router-link :to="!$root.user ? '/sign/up' : ''">สมัครสอบ</router-link></li>
@@ -136,12 +149,12 @@ const Manual = {components: {MyContact}, template: `
 				<li>แก้ไขข้อมูลและบันทึกข้อมูล</>
 			</ul>
 		<li>สาขาวิชาจะประกาศรายชื่อผู้มีสิทธิ์เข้าสอบสัมภาษณ์ผ่านเว็บไซต์/Facebook Fanpage/E-mail</li>
-		<li>เข้าสอบสัมภาษณ์</li>
+		<li>เข้าสอบสัมภาษณ์ ผ่านช่องทางออนไลน์ หรือ เดินทางมาสัมภาษณ์ที่มหาวิทยาลัย </li>
 		<li>สาขาวิชาจะประกาศผลการเข้าศึกษาต่อผ่านเว็บไซต์/Facebook Fanpage/E-mail</li>
 		<li>หากตัดสินใจเข้าศึกษาต่อ ให้ทำการยืนยันสิทธิ์ผ่านระบบ </li>
 		<li>เข้าสู่ขั้นตอนการลงทะเบียนและชำระค่าบำรุงการศึกษาผ่านมหาวิทยาลัย</li>
 	</ul>
-	<img src="/process.svg">
+	<img src="/process.svg" alt="admission process">
 	<my-contact></my-contact>
 </div>
 `
@@ -220,7 +233,7 @@ new Vue({
 </script>
 <main>
 	<nav class="tabs is-full">
-		<a href="https://www.facebook.com/comsci.reru"><img src="/favicon.svg" width="32" style="min-width:24px"></a>
+		<a href="https://www.facebook.com/comsci.reru"><img src="/favicon.svg" alt="logo" width="32" style="min-width:24px"></a>
 		<router-link to="/">หน้าแรก</router-link>
 		<router-link to="/manual">คู่มือการสมัคร</router-link>
 		<router-link to="/update" v-if="user">ข้อมูลการสมัคร</router-link>
