@@ -2,7 +2,7 @@ export default {
 	props: ["create", "update"],
 	data() {
 		return {
-			user: {status:"รอการสอบสัมภาษณ์", interviewdate:"27 มีนาคม 2564"},
+			user: {status:"รอการสอบสัมภาษณ์", interviewdate:"3 เมษายน 2564"},
 		}
 	},
 	mounted() {
