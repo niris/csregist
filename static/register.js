@@ -2,7 +2,7 @@ export default {
 	props: ["create", "update"],
 	data() {
 		return {
-			user: {status:"รอการสอบสัมภาษณ์", interviewdate:"24 เมษายน 2564"},
+			user: {status:"รอการสอบสัมภาษณ์", interviewdate:"20 พฤศจิกายน 2564"},
 		}
 	},
 	mounted() {
@@ -59,7 +59,7 @@ export default {
 			<td><img alt="logo" width=150 src="/logo.png"></td>
 			<td><h2 class=text-center>แบบฟอร์มการรับสมัคร</h2>
 			<p class=text-center>สาขาวิชาวิทยาการคอมพิวเตอร์ มหาวิทยาลัยราชภัฏร้อยเอ็ด</p>
-			<p class=text-center>ปีการศึกษา 2564</h3></p>
+			<p class=text-center>ปีการศึกษา 2565</h3></p>
 		</tr>
 	</table>
 
